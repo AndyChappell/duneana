@@ -295,17 +295,15 @@ void test::atmoAnalysis::analyze(art::Event const& evt)
         //Filling CVN
         art::Handle<std::vector<cvn::Result>> cvnin = evt.getHandle<std::vector<cvn::Result>>(fCVNLabel);
         if( !cvnin.failedToGet() && !cvnin->empty()) {
-          const std::vector<std::vector<float>> &scores = (*cvnin)[0].fOutput;
-
-          fCVNScoreNC = scores[0][0];
-          fCVNScoreNuE = scores[0][1];
-          fCVNScoreNuMu = scores[0][2];
-          fCVNScoreProton0 = scores[1][0];
-          fCVNScoreProton1 = scores[1][1];
-          fCVNScoreProton2 = scores[1][2];
-          fCVNScoreProton3 = scores[1][3];
-          fCVNScorePion0 = scores[2][0];
-          fCVNScorePion1 = scores[2][1];
+          fCVNScoreNC = (*cvnin)[0].GetNCProbability();
+          fCVNScoreNuE = (*cvnin)[0].GetNueProbability();
+          fCVNScoreNuMu = (*cvnin)[0].GetNumuProbability();
+          fCVNScoreProton0 = (*cvnin)[0].Get0protonsProbability();
+          fCVNScoreProton1 = (*cvnin)[0].Get1protonsProbability();
+          fCVNScoreProton2 = (*cvnin)[0].Get2protonsProbability();
+          fCVNScoreProton3 = (*cvnin)[0].GetNprotonsProbability();
+          fCVNScorePion0 = (*cvnin)[0].Get0pionsProbability();
+          fCVNScorePion1 = (*cvnin)[0].Get1pionsProbability();
         }
          else{
           mf::LogWarning("CAFMaker") << "No CVNResult found with label '" << fCVNLabel << "'";
